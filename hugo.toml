@@ -5,7 +5,7 @@ title = 'Long Hoang Nguyen'
 disableKinds = ['taxonomy', 'term', 'rss', 'sitemap']
 
 [params]
-  description = "Long Hoang Nguyen — PhD candidate at TUM and Research Associate at KIT, researching AI accountability across information systems, computer science, and law."
+  description = "Long Hoang Nguyen - AI accountability researcher"
   author = "Long Hoang Nguyen"
 
   [params.links]
