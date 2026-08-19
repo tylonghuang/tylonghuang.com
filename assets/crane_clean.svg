@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784 430" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <path id="body" pathLength="1" d="M 183.67 416.38 L 258.99 288.11 L 237.28 238.07 L 319.18 129.73 L 492.80 259.24 L 571.07 329.55 L 522.27 417.56 Z"/>
+  <path id="neck" pathLength="1" d="M 183.67 416.38 L 127.53 52.45 L 165.97 70.45 L 237.28 238.07"/>
+  <path id="beak" pathLength="1" d="M 127.53 52.45 L 12.00 121.28 L 133.27 86.41"/>
+  <path id="tail" pathLength="1" d="M 571.07 329.55 L 771.68 12.00 L 492.80 259.24"/>
+  <path id="creases" pathLength="1" d="M 319.18 129.73 L 258.99 288.11 L 492.80 259.24 L 522.27 417.56 L 258.99 288.11"/>
+</svg>

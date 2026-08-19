@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    text {
+      font: 700 26px system-ui, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+      fill: #1e1a17;
+    }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #ece7de; }
+    }
+  </style>
+  <text x="16" y="26" text-anchor="middle">龙</text>
+</svg>

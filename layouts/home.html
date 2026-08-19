@@ -1,0 +1,47 @@
+{{ define "main" }}
+{{- $links := site.Params.links -}}
+{{- $crane := resources.Get "crane_clean.svg" -}}
+<section class="hero">
+  <div class="hero__crane" aria-hidden="true">
+    {{- with $crane -}}
+      <div class="crane crane--flip">{{ .Content | safeHTML }}</div>
+    {{- end -}}
+  </div>
+
+  <div class="hero__text">
+    <h1 class="greeting">
+      Hi, I am Long
+      <span class="dragon" tabindex="0" role="button"
+            aria-expanded="false"
+            aria-controls="dragon-reveal"
+            aria-label="What does 龙 mean?">龙</span>
+    </h1>
+    <p id="dragon-reveal" class="dragon-reveal" hidden>
+      lóng = dragon, the literal meaning of my name.
+    </p>
+
+    <p class="lede">
+      I research how to establish meaningful AI accountability across
+      information systems, computer science, and law.
+    </p>
+
+    <p class="bio">
+      I do my research at
+      <a href="https://cii.aifb.kit.edu/">KIT</a>
+      and
+      <a href="https://www.cs.cit.tum.de/en/ii/home/">TUM</a>.
+      Outside of work, I explore cultures through food and language, and I speak
+      German, Vietnamese, English, French, and Mandarin.
+      I am currently training for a half-marathon.
+    </p>
+
+    <ul class="links" role="list">
+      <li><a href="{{ $links.scholar }}">Scholar</a></li>
+      <li><a href="{{ $links.orcid }}">ORCID</a></li>
+      <li><a href="{{ $links.linkedin }}">LinkedIn</a></li>
+      <li><a href="{{ $links.github }}">GitHub</a></li>
+      <li><a href="{{ $links.email }}">Email</a></li>
+    </ul>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,19 @@
+baseURL = 'http://localhost:1313/'
+languageCode = 'en-us'
+title = 'Long Hoang Nguyen'
+
+disableKinds = ['taxonomy', 'term', 'rss', 'sitemap']
+
+[params]
+  description = "Long Hoang Nguyen — PhD candidate at TUM and Research Associate at KIT, researching AI accountability across information systems, computer science, and law."
+  author = "Long Hoang Nguyen"
+
+  [params.links]
+    scholar  = "https://scholar.google.com/citations?user=RP_iqV0AAAAJ"
+    orcid    = "https://orcid.org/0009-0005-7733-8733"
+    linkedin = "https://linkedin.com/in/longngyn"
+    github   = "https://github.com/tylonghuang/"
+    email    = "mailto:long.ngyn[AT]pm.me"
+
+[markup.goldmark.renderer]
+  unsafe = true
