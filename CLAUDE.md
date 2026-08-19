@@ -11,24 +11,24 @@ The page's job: say only what Google Scholar and LinkedIn can't. Everything else
 - Vanilla Hugo templates + one CSS file + minimal vanilla JS (only what the spec below requires).
 - No web fonts unless explicitly requested later. System font stack, with a CJK-capable fallback chain so 龙 always renders (e.g. system-ui first, then "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif).
 - All colors via CSS custom properties. Dark mode via `prefers-color-scheme` only — no toggle, no JS theming.
-- Deployment: Netlify, linked to this repo, build configured in the Netlify dashboard (hugo build, publish dir `public/`, HUGO_VERSION env var). By choice there is no `netlify.toml` and no CI workflow in the repo — do not create either, and do not touch DNS/domain settings.
-- Do not re-scaffold Hugo or rewrite `hugo.toml` wholesale. Extract `baseURL`, `languageCode`, `title` from `hugo_OLD.toml`; ignore its theme-specific params.
+- Deployment: Netlify, linked to this repo, build configured in the Netlify dashboard (hugo build, publish dir `public/`, `HUGO_VERSION=0.165.0` env var). By choice there is no `netlify.toml` and no CI workflow in the repo — do not create either, and do not touch DNS/domain settings.
+- Do not re-scaffold Hugo or rewrite `hugo.toml` wholesale.
 - `themes/` stays empty.
 
 ## Page structure (single page, no navigation)
 
-Only `content/_index.md` renders as a page. `contact.md` is legacy raw material — its email goes into the link list, then delete the file.
+Only `content/_index.md` renders as a page.
 
 Hero, split layout:
 - Left: the crane SVG (see Animation). On mobile (< ~700px) it stacks on top, scaled so it takes at most ~1/3 of viewport height.
 - Right: text block:
   1. Greeting line: `Hi, I am Long 龙`
-     - 龙 gets the accent color and a subtle affordance (dotted underline or similar). Clicking/tapping it toggles a small inline reveal, one line: "lóng — dragon, the literal meaning of my name." Must work on touch (no title-attribute-only tooltip). Keyboard accessible.
-  2. One research sentence in plain language (rework from old bio, e.g. "I research how AI systems can be held accountable — across information systems, computer science, and law.")
-  3. Two–three short bio sentences max: current roles (Research Associate at KIT, PhD candidate at TUM, with links), and the languages/cultures line from the old bio. Compress or drop the Potsdam/HPC history.
+     - 龙 gets the accent color and a subtle affordance (dotted underline or similar). Clicking/tapping it toggles a small inline reveal, one line: "lóng = dragon, the literal meaning of my name." Must work on touch (no title-attribute-only tooltip). Keyboard accessible.
+  2. One research sentence in plain language, e.g. "I research how to establish meaningful AI accountability across information systems, computer science, and law."
+  3. Two–three short bio sentences max: research affiliation (KIT and TUM, linked but without formal titles — those live on LinkedIn), the languages/cultures line, and one personal detail. The last sentence currently ties the crane to origami; keep that thread if you replace it.
 - Link list, directly after bio, plain labeled text links (no icons), one per line or a tight inline row:
-  Google Scholar · ORCID · LinkedIn · GitHub · Email
-  URLs are in `content/_index.md` (old site). Email stays obfuscated the way the old site had it or as a mailto with the [AT] pattern — ask before changing.
+  Scholar · ORCID · LinkedIn · GitHub · Email
+  URLs live under `[params.links]` in `hugo.toml`. Email stays obfuscated with the `[AT]` pattern — ask before changing.
 - Footer: nothing except a small imprint/legal line placeholder (comment it in the template, content TBD).
 
 Explicitly excluded (do not add): publication list, news/updates, CV download, photo/avatar in the layout, separate about/contact pages, hamburger/nav menus, social icon rows.
@@ -38,7 +38,7 @@ Blog: a `posts` section must exist in the templates (list + single), but no link
 ## Visual style
 
 - Quiet, typographic, near-monochrome. White/warm off-white background, near-black ink.
-- One accent color, used ONLY for links and the 龙 character. Define `--accent` even if muted; a desaturated vermillion or warm dark gray. Keep it easy to change.
+- One accent color, used ONLY for the 龙 character and the hub link list. Inline prose links (e.g. KIT / TUM in the bio) stay body-colored with a muted underline — the accent is a signal, not a link marker. Define `--accent` even if muted; a desaturated vermillion or warm dark gray. Keep it easy to change.
 - CSS variables minimum set: `--bg`, `--ink`, `--ink-muted`, `--accent`. Dark mode redefines these under `prefers-color-scheme: dark` (dark warm gray background, off-white ink, accent adjusted for contrast).
 - Minimal CSS overall. No hover animations, no transitions on links beyond color, no shadows, no rounded cards. When in doubt, less.
 - Target: whole page fits in roughly one viewport on desktop.
@@ -79,13 +79,7 @@ Stroke draw-in via `stroke-dasharray`/`stroke-dashoffset` with `pathLength="1"` 
 - Write a real meta description (one sentence about Long and AI accountability research). The old site shipped the theme's default description — that class of mistake must not recur.
 - Sensible `<title>`, `lang` attribute, og:title/description. No analytics, no tracking, no third-party requests of any kind.
 
-## Working agreements for this session
+## Working agreements
 
-- Work in stages; stop after each for visual review in `hugo server`:
-  1. Skeleton: baseof, index, head partial, CSS variable system + dark mode. No animation.
-  2. Crane inline + draw-in animation per spec.
-  3. Favicon, metadata, typography pass, 龙 reveal interaction.
-  4. Posts templates (hidden), footer, cleanup.
-- Small commits per working stage.
-- At the end, run a deletion pass: remove any CSS/markup not required by this spec.
+- Small, focused commits.
 - If the spec is ambiguous, ask; do not invent features.
