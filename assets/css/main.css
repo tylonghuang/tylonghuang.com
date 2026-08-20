@@ -78,71 +78,71 @@ a:hover { color: var(--accent); }
   max-width: 68rem;
 }
 
-.hero__crane {
+.hero__figure {
   min-height: 12rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.crane { width: 100%; color: var(--ink); }
-.crane svg {
+.origami { width: 100%; color: var(--ink); }
+.origami svg {
   display: block;
   width: 100%;
   height: auto;
   max-height: 60vh;
 }
-.crane--flip svg { transform: scaleX(-1); }
+.origami--flip svg { transform: scaleX(-1); }
 
-.crane #creases,
-.crane .crease { stroke: var(--ink-muted); stroke-width: 2; }
+.origami #creases,
+.origami .crease { stroke: var(--ink-muted); stroke-width: 2; }
 
-.crane path {
+.origami path {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: crane-draw var(--dur, 1s) ease-out var(--delay, 0s) forwards;
+  animation: origami-draw var(--dur, 1s) ease-out var(--delay, 0s) forwards;
 }
-.crane #body    { --dur: 1.6s;  --delay: 0.2s; }
-.crane #neck    { --dur: 1.0s;  --delay: 1.7s; }
-.crane #beak    { --dur: 0.55s; --delay: 2.6s; }
-.crane #tail    { --dur: 1.0s;  --delay: 3.1s; }
-.crane #creases { --dur: 1.2s;  --delay: 4.0s; }
+.origami #body    { --dur: 1.6s;  --delay: 0.2s; }
+.origami #neck    { --dur: 1.0s;  --delay: 1.7s; }
+.origami #beak    { --dur: 0.55s; --delay: 2.6s; }
+.origami #tail    { --dur: 1.0s;  --delay: 3.1s; }
+.origami #creases { --dur: 1.2s;  --delay: 4.0s; }
 
 /* Dragon: durations scaled so px/s matches the crane's pacing, not just
-   "more paths, more seconds". Must follow the .crane rules — equal
+   "more paths, more seconds". Must follow the .origami rules — equal
    specificity, so source order decides for the shared ids. */
-.crane--dragon #body      { --dur: 0.90s; --delay: 0.20s; }
+.origami--dragon #body      { --dur: 0.90s; --delay: 0.20s; }
 /* the two legs are separate paths so they draw at once, not one then the
    other; each covers half the old distance, so the duration halves too */
-.crane--dragon #leg-rear,
-.crane--dragon #leg-front { --dur: 0.32s; --delay: 0.95s; }
-.crane--dragon #tail      { --dur: 1.15s; --delay: 1.15s; }
-.crane--dragon #neck      { --dur: 1.20s; --delay: 2.10s; }
-.crane--dragon #horn      { --dur: 0.36s; --delay: 3.15s; }
-.crane--dragon #wing-far  { --dur: 0.45s; --delay: 3.45s; }
-.crane--dragon #wing-near { --dur: 0.80s; --delay: 3.70s; }
+.origami--dragon #leg-rear,
+.origami--dragon #leg-front { --dur: 0.32s; --delay: 0.95s; }
+.origami--dragon #tail      { --dur: 1.15s; --delay: 1.15s; }
+.origami--dragon #neck      { --dur: 1.20s; --delay: 2.10s; }
+.origami--dragon #horn      { --dur: 0.36s; --delay: 3.15s; }
+.origami--dragon #wing-far  { --dur: 0.45s; --delay: 3.45s; }
+.origami--dragon #wing-near { --dur: 0.80s; --delay: 3.70s; }
 /* Creases ripple head-to-tail, continuing the sweep instead of restarting
    it: neck first, then along the body, trailing off at the tail tip.
    Ids run tail-to-head in the file, so the delays count down. Each
    duration tracks that mark's own length, so all eight draw at one speed. */
-.crane--dragon #crease-8  { --dur: 0.18s; --delay: 4.35s; }
-.crane--dragon #crease-7  { --dur: 0.29s; --delay: 4.45s; }
-.crane--dragon #crease-6  { --dur: 0.28s; --delay: 4.55s; }
-.crane--dragon #crease-5  { --dur: 0.27s; --delay: 4.65s; }
-.crane--dragon #crease-4  { --dur: 0.30s; --delay: 4.75s; }
-.crane--dragon #crease-3  { --dur: 0.21s; --delay: 4.85s; }
-.crane--dragon #crease-2  { --dur: 0.15s; --delay: 4.95s; }
-.crane--dragon #crease-1  { --dur: 0.07s; --delay: 5.05s; }
+.origami--dragon #crease-8  { --dur: 0.18s; --delay: 4.35s; }
+.origami--dragon #crease-7  { --dur: 0.29s; --delay: 4.45s; }
+.origami--dragon #crease-6  { --dur: 0.28s; --delay: 4.55s; }
+.origami--dragon #crease-5  { --dur: 0.27s; --delay: 4.65s; }
+.origami--dragon #crease-4  { --dur: 0.30s; --delay: 4.75s; }
+.origami--dragon #crease-3  { --dur: 0.21s; --delay: 4.85s; }
+.origami--dragon #crease-2  { --dur: 0.15s; --delay: 4.95s; }
+.origami--dragon #crease-1  { --dur: 0.07s; --delay: 5.05s; }
 
-@keyframes crane-draw { to { stroke-dashoffset: 0; } }
+@keyframes origami-draw { to { stroke-dashoffset: 0; } }
 
-.crane-drawn .crane path {
+.origami-drawn .origami path {
   animation: none;
   stroke-dashoffset: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .crane path { animation: none; stroke-dashoffset: 0; }
+  .origami path { animation: none; stroke-dashoffset: 0; }
 }
 
 .hero__text { max-width: var(--measure); }
@@ -155,16 +155,16 @@ a:hover { color: var(--accent); }
   line-height: 1.15;
 }
 
-.dragon {
+.glyph {
   color: var(--accent);
   cursor: pointer;
   text-decoration: underline dotted currentColor;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
-.dragon:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.glyph:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-.dragon-reveal {
+.glyph-reveal {
   color: var(--ink-muted);
   font-size: 0.95rem;
   margin: 0 0 1.25rem;
@@ -207,9 +207,9 @@ a:hover { color: var(--accent); }
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  .hero__crane {
+  .hero__figure {
     max-height: 33vh;
     min-height: 0;
   }
-  .crane svg { max-height: 33vh; width: auto; margin: 0 auto; }
+  .origami svg { max-height: 33vh; width: auto; margin: 0 auto; }
 }

@@ -6,21 +6,21 @@
 {{/* the crane is drawn facing left, the dragon facing right; both must face the text */}}
 {{- $flip := eq $figure "crane" -}}
 <section class="hero">
-  <div class="hero__crane" aria-hidden="true">
+  <div class="hero__figure" aria-hidden="true">
     {{- with $svg -}}
-      <div class="crane crane--{{ $figure }}{{ if $flip }} crane--flip{{ end }}">{{ .Content | safeHTML }}</div>
+      <div class="origami origami--{{ $figure }}{{ if $flip }} origami--flip{{ end }}">{{ .Content | safeHTML }}</div>
     {{- end -}}
   </div>
 
   <div class="hero__text">
     <h1 class="greeting">
       Hi, I am Long
-      <span class="dragon" tabindex="0" role="button"
+      <span class="glyph" tabindex="0" role="button"
             aria-expanded="false"
-            aria-controls="dragon-reveal"
+            aria-controls="glyph-reveal"
             aria-label="What does 龙 mean?">龙</span>
     </h1>
-    <p id="dragon-reveal" class="dragon-reveal" hidden>
+    <p id="glyph-reveal" class="glyph-reveal" hidden>
       lóng = dragon, the literal meaning of my name.
     </p>
 

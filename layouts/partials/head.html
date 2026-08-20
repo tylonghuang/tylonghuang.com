@@ -14,7 +14,7 @@
 <meta property="og:url" content="{{ .Permalink }}">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<script>try{if(sessionStorage.getItem('craneDrawn'))document.documentElement.classList.add('crane-drawn')}catch(e){}</script>
+<script>try{if(sessionStorage.getItem('origamiDrawn'))document.documentElement.classList.add('origami-drawn')}catch(e){}</script>
 {{- with resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{- end }}

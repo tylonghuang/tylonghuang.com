@@ -20,12 +20,12 @@ The page's job: say only what Google Scholar and LinkedIn can't. Everything else
 Only `content/_index.md` renders as a page.
 
 Hero, split layout:
-- Left: the crane SVG (see Animation). On mobile (< ~700px) it stacks on top, scaled so it takes at most ~1/3 of viewport height.
+- Left: the origami figure (see The figure). On mobile (< ~700px) it stacks on top, scaled so it takes at most ~1/3 of viewport height.
 - Right: text block:
   1. Greeting line: `Hi, I am Long 龙`
      - 龙 gets the accent color and a subtle affordance (dotted underline or similar). Clicking/tapping it toggles a small inline reveal, one line: "lóng = dragon, the literal meaning of my name." Must work on touch (no title-attribute-only tooltip). Keyboard accessible.
   2. One research sentence in plain language, e.g. "I research how to establish meaningful AI accountability across information systems, computer science, and law."
-  3. Two–three short bio sentences max: research affiliation (KIT and TUM, linked but without formal titles — those live on LinkedIn), the languages/cultures line, and one personal detail. The last sentence currently ties the crane to origami; keep that thread if you replace it.
+  3. Two–three short bio sentences max: research affiliation (KIT and TUM, linked but without formal titles — those live on LinkedIn), the languages/cultures line, and one personal detail. The last sentence ties the hero figure to origami and must name it via `{{ $figure }}`, never a hardcoded word, so copy and image can't drift apart.
 - Link list, directly after bio, plain labeled text links (no icons), one per line or a tight inline row:
   Scholar · ORCID · LinkedIn · GitHub · Email
   URLs live under `[params.links]` in `hugo.toml`. Email stays obfuscated with the `[AT]` pattern — ask before changing.
@@ -43,18 +43,38 @@ Blog: a `posts` section must exist in the templates (list + single), but no link
 - Minimal CSS overall. No hover animations, no transitions on links beyond color, no shadows, no rounded cards. When in doubt, less.
 - Target: whole page fits in roughly one viewport on desktop.
 
-## The crane (core feature)
+## The figure (core feature)
 
-Asset: `assets/crane_clean.svg` — 5 stroke-only paths with ids `body`, `neck`, `beak`, `tail`, `creases`. viewBox `0 0 784 430`, `stroke="currentColor"`, round caps/joins. Do not regenerate or "optimize" the path data.
+The hero holds one hand-drawn origami figure. Which one is a site param, not a hardcoded asset:
+
+```toml
+[params]
+  figure = "dragon"   # or "crane"
+```
+
+`layouts/home.html` loads `assets/{figure}_clean.svg`, tags the wrapper `origami--{figure}`, and derives the facing. The bio's closing noun renders from the same variable, so the copy can never name a figure the page isn't showing. Both SVGs stay in the repo; switching is one word.
+
+**Naming.** `.origami` is the figure wrapper (it holds either one — never call it `.crane`). `.glyph` is the 龙 character in the greeting, which is a different thing entirely; keep them apart.
+
+**Current figure: the dragon.** It carries the name — 龙 means dragon — so it needs no sentence justifying its presence. The crane did, which is why it lost.
+
+Assets — stroke-only paths, `stroke="currentColor"`, round caps/joins, `pathLength="1"` on every path. **Do not regenerate or "optimize" the path data:**
+
+| file | viewBox | faces | paths |
+|---|---|---|---|
+| `dragon_clean.svg` | `0 0 636 278` | right | `body`, `wing-near`, `wing-far`, `tail`, `neck`, `horn`, `leg-rear`, `leg-front`, `crease-1`…`crease-8` |
+| `crane_clean.svg` | `0 0 784 430` | left | `body`, `neck`, `beak`, `tail`, `creases` |
 
 - Inline the SVG into the template (Hugo `resources.Get` + `.Content`), never `<img>` — CSS must reach the paths.
-- The crane faces left; in the left-hero position, wrap it so it can be mirrored horizontally (`scale(-1,1)` on a group or CSS transform) behind a single template/CSS flag. Default: mirrored (facing the text). Must be trivially flippable.
-- Crane inherits `color: var(--ink)` so dark mode is automatic.
-- The `#creases` path renders lighter/thinner than the rest: `stroke: var(--ink-muted)`, stroke-width 2 vs 3.
+- **Facing is per-figure, not a constant.** The figure sits left of the text and must face it, so the crane (drawn facing left) gets mirrored via `origami--flip` and the dragon (drawn facing right) must not be. `$flip` derives this from `$figure`; do not hardcode either way.
+- The figure inherits `color: var(--ink)` so dark mode is automatic.
+- Creases render lighter/thinner than the rest: `stroke: var(--ink-muted)`, stroke-width 2 vs 3.
 
 ### Draw-in animation
 
-Stroke draw-in via `stroke-dasharray`/`stroke-dashoffset` with `pathLength="1"` on every path. Pure CSS keyframes; per-path duration/delay via custom properties. Reference timing (from an approved prototype — keep these values):
+Stroke draw-in via `stroke-dasharray`/`stroke-dashoffset` with `pathLength="1"` on every path. Pure CSS keyframes; per-path duration/delay via custom properties, scoped under `.origami--{figure}`.
+
+Crane reference timing (an approved prototype — keep these values):
 
 | path    | duration | delay |
 |---------|----------|-------|
@@ -64,10 +84,16 @@ Stroke draw-in via `stroke-dasharray`/`stroke-dashoffset` with `pathLength="1"` 
 | tail    | 1.0s     | 3.1s  |
 | creases | 1.2s     | 4.0s  |
 
+The dragon's timings live in `main.css` and end at ~5.1s, matching the crane's 5.2s. Three rules govern any new figure:
+
+- **`pathLength="1"` normalizes every path, so duration must track the path's real length** — otherwise a long stroke and a short one sharing a duration draw at wildly different speeds. Scale durations to hold px/s roughly constant; the crane's average is the reference. More paths should not mean a proportionally longer animation.
+- **`stroke-dashoffset` walks a multi-subpath `<path>` sequentially, not simultaneously.** Split into separate elements when parts should move together (the dragon's two legs read as a glitch otherwise). Keep them combined, or stagger explicitly, when a ripple is wanted (the dragon's creases sweep head-to-tail on purpose).
+- Overlap the strokes: each starts before the previous lands. No gaps.
+
 - Easing: `ease-out` per stroke.
-- Plays once per browser session: tiny inline JS sets a `sessionStorage` flag after first play; if the flag exists on load, add a class that skips straight to the fully drawn state (no animation, no flash of empty crane).
-- `prefers-reduced-motion: reduce`: no animation ever, crane renders fully drawn.
-- After the animation, the crane is static. No loops, no hover motion, no scroll effects, no page-transition effects.
+- Plays once per browser session: tiny inline JS sets a `sessionStorage` flag once the last path finishes; if the flag exists on load, a class skips straight to the fully drawn state (no animation, no flash of an empty figure). The flag is set by counting animation ends across `.origami path` — never by watching one named path, which breaks when the figure changes.
+- `prefers-reduced-motion: reduce`: no animation ever, figure renders fully drawn.
+- After the animation, the figure is static. No loops, no hover motion, no scroll effects, no page-transition effects.
 
 ## Favicon
 

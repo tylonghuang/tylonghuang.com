@@ -12,13 +12,13 @@
   </footer>
   <script>
     (function () {
-      var paths = document.querySelectorAll('.crane path');
+      var paths = document.querySelectorAll('.origami path');
       var pending = paths.length;
       paths.forEach(function (p) {
         p.addEventListener('animationend', function () {
           if (--pending > 0) return;
-          try { sessionStorage.setItem('craneDrawn', '1'); } catch (e) {}
-          document.documentElement.classList.add('crane-drawn');
+          try { sessionStorage.setItem('origamiDrawn', '1'); } catch (e) {}
+          document.documentElement.classList.add('origami-drawn');
         }, { once: true });
       });
 
@@ -29,7 +29,7 @@
         btn.setAttribute('aria-expanded', String(!open));
         panel.hidden = open;
       };
-      document.querySelectorAll('.dragon').forEach(function (btn) {
+      document.querySelectorAll('.glyph').forEach(function (btn) {
         btn.addEventListener('click', function () { toggle(btn); });
         btn.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') {
