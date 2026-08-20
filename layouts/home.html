@@ -1,10 +1,14 @@
 {{ define "main" }}
 {{- $links := site.Params.links -}}
-{{- $crane := resources.Get "crane_clean.svg" -}}
+{{/* which origami figure fills the hero: "crane" or "dragon" */}}
+{{- $figure := site.Params.figure | default "crane" -}}
+{{- $svg := resources.Get (printf "%s_clean.svg" $figure) -}}
+{{/* the crane is drawn facing left, the dragon facing right; both must face the text */}}
+{{- $flip := eq $figure "crane" -}}
 <section class="hero">
   <div class="hero__crane" aria-hidden="true">
-    {{- with $crane -}}
-      <div class="crane crane--flip">{{ .Content | safeHTML }}</div>
+    {{- with $svg -}}
+      <div class="crane crane--{{ $figure }}{{ if $flip }} crane--flip{{ end }}">{{ .Content | safeHTML }}</div>
     {{- end -}}
   </div>
 
@@ -32,7 +36,7 @@
       <a href="https://www.cs.cit.tum.de/en/ii/home/">TUM</a>.
       Outside of work, I explore cultures through food and language, and I speak
       German, Vietnamese, English, French, and Mandarin.
-      I also love origami. And yes, that's why the crane.
+      I also love origami. And yes, that's why the {{ $figure }}.
     </p>
 
     <ul class="links" role="list">

@@ -12,13 +12,15 @@
   </footer>
   <script>
     (function () {
-      var last = document.querySelector('.crane #creases');
-      if (last) {
-        last.addEventListener('animationend', function () {
+      var paths = document.querySelectorAll('.crane path');
+      var pending = paths.length;
+      paths.forEach(function (p) {
+        p.addEventListener('animationend', function () {
+          if (--pending > 0) return;
           try { sessionStorage.setItem('craneDrawn', '1'); } catch (e) {}
           document.documentElement.classList.add('crane-drawn');
         }, { once: true });
-      }
+      });
 
       var toggle = function (btn) {
         var panel = document.getElementById(btn.getAttribute('aria-controls'));

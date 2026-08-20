@@ -94,7 +94,8 @@ a:hover { color: var(--accent); }
 }
 .crane--flip svg { transform: scaleX(-1); }
 
-.crane #creases { stroke: var(--ink-muted); stroke-width: 2; }
+.crane #creases,
+.crane .crease { stroke: var(--ink-muted); stroke-width: 2; }
 
 .crane path {
   stroke-dasharray: 1;
@@ -106,6 +107,32 @@ a:hover { color: var(--accent); }
 .crane #beak    { --dur: 0.55s; --delay: 2.6s; }
 .crane #tail    { --dur: 1.0s;  --delay: 3.1s; }
 .crane #creases { --dur: 1.2s;  --delay: 4.0s; }
+
+/* Dragon: durations scaled so px/s matches the crane's pacing, not just
+   "more paths, more seconds". Must follow the .crane rules — equal
+   specificity, so source order decides for the shared ids. */
+.crane--dragon #body      { --dur: 0.90s; --delay: 0.20s; }
+/* the two legs are separate paths so they draw at once, not one then the
+   other; each covers half the old distance, so the duration halves too */
+.crane--dragon #leg-rear,
+.crane--dragon #leg-front { --dur: 0.32s; --delay: 0.95s; }
+.crane--dragon #tail      { --dur: 1.15s; --delay: 1.15s; }
+.crane--dragon #neck      { --dur: 1.20s; --delay: 2.10s; }
+.crane--dragon #horn      { --dur: 0.36s; --delay: 3.15s; }
+.crane--dragon #wing-far  { --dur: 0.45s; --delay: 3.45s; }
+.crane--dragon #wing-near { --dur: 0.80s; --delay: 3.70s; }
+/* Creases ripple head-to-tail, continuing the sweep instead of restarting
+   it: neck first, then along the body, trailing off at the tail tip.
+   Ids run tail-to-head in the file, so the delays count down. Each
+   duration tracks that mark's own length, so all eight draw at one speed. */
+.crane--dragon #crease-8  { --dur: 0.18s; --delay: 4.35s; }
+.crane--dragon #crease-7  { --dur: 0.29s; --delay: 4.45s; }
+.crane--dragon #crease-6  { --dur: 0.28s; --delay: 4.55s; }
+.crane--dragon #crease-5  { --dur: 0.27s; --delay: 4.65s; }
+.crane--dragon #crease-4  { --dur: 0.30s; --delay: 4.75s; }
+.crane--dragon #crease-3  { --dur: 0.21s; --delay: 4.85s; }
+.crane--dragon #crease-2  { --dur: 0.15s; --delay: 4.95s; }
+.crane--dragon #crease-1  { --dur: 0.07s; --delay: 5.05s; }
 
 @keyframes crane-draw { to { stroke-dashoffset: 0; } }
 

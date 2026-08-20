@@ -7,6 +7,8 @@ disableKinds = ['taxonomy', 'term', 'rss', 'sitemap']
 [params]
   description = "Long Hoang Nguyen - AI accountability researcher"
   author = "Long Hoang Nguyen"
+  # hero figure: "crane" or "dragon"
+  figure = "dragon"
 
   [params.links]
     scholar  = "https://scholar.google.com/citations?user=RP_iqV0AAAAJ"
